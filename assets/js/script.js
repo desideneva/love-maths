@@ -2,13 +2,14 @@
 
 document.addEventListener("DOMContentLoaded", function() {
   let buttons=document.getElementsByTagName("button");
+  
   for (let button of buttons) {
     button.addEventListener("click", function() {
         if (this.getAttribute("data-type") === "submit") {
             checkAnswer();
         } else {
-            let gameType=this.getAttribute("data-type");
-            alert("You clicked ${gameType}");
+            let gameType = this.getAttribute("data-type");
+            alert(`You clicked ${gameType}`);
         }
     })
   }
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
         checkAnswer();
     }
   })
-  
+
   runGame("addition");
 })
 
@@ -42,6 +43,8 @@ function runGame(gameType) {
         displayMultiplyQuestion(num1, num2);
     } else if (gameType === "subtract") {
         displaySubtractQuestion(num1, num2);
+    } else if (gameType === "division") {
+        displayDivisionQuestion(num1 * num2, num2);
     } else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown: ${gameType}.Aborting!`;
@@ -86,6 +89,8 @@ function calculateCorrectAnswer() {
         return [operand1 * operand2, "multiply"];
     } else if (operator === "-") {
         return [operand1 - operand2, "subtract"];
+    } else if (operator === "/") {
+        return [operand1 / operand2, "division"];
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}. Aborting!`;
@@ -131,4 +136,10 @@ function displayMultiplyQuestion(operand1, operand2) {
     document.getElementById(`operand2`).textContent = operand2;
     document.getElementById(`operator`).textContent = "x";
 
+}
+
+function displayDivisionQuestion(operand1, operand2) {
+    document.getElementById("operand1").textContent = operand1;
+    document.getElementById("operand2").textContent = operand2;
+    document.getElementById("operator").textContent = "/";
 }
